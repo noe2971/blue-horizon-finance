@@ -1,28 +1,62 @@
 
 import { useEffect, useState } from 'react';
-import { Shield, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Shield, TrendingUp, AlertTriangle, WifiOff } from 'lucide-react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db, auth } from '../config/firebase';
 import axios from 'axios';
+import { toast } from '@/components/ui/use-toast';
 
 const HealthCheck = () => {
   const [profileData, setProfileData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!isOnline) {
+        setLoading(false);
+        toast({
+          title: "Network Error",
+          description: "You are currently offline. Please check your internet connection.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       if (auth.currentUser) {
-        const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
-        if (userDoc.exists()) {
-          setProfileData(userDoc.data());
-          await getRecommendations(userDoc.data());
+        try {
+          const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+          if (userDoc.exists()) {
+            setProfileData(userDoc.data());
+            await getRecommendations(userDoc.data());
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          toast({
+            title: "Error",
+            description: "Failed to fetch your financial data. Please try again later.",
+            variant: "destructive",
+          });
         }
       }
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [isOnline]);
 
   const getRecommendations = async (profile) => {
     const apiKey = import.meta.env.VITE_GPT_KEY;
@@ -50,8 +84,27 @@ const HealthCheck = () => {
       setRecommendations(JSON.parse(content));
     } catch (error) {
       console.error('Error getting recommendations:', error);
+      toast({
+        title: "Error",
+        description: "Failed to get AI recommendations. Please try again later.",
+        variant: "destructive",
+      });
     }
   };
+
+  if (!isOnline) {
+    return (
+      <div className="max-w-5xl mx-auto">
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <div className="flex flex-col items-center justify-center py-12">
+            <WifiOff className="h-16 w-16 text-gray-400 mb-4" />
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">You're Offline</h2>
+            <p className="text-gray-500">Please check your internet connection and try again</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
