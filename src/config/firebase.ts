@@ -4,13 +4,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyB00Ln4uv8ug9Gmp-K2nLHFIelRq9_0RK4",
+  authDomain: "lovable-clone.firebaseapp.com",
+  projectId: "lovable-clone",
+  storageBucket: "lovable-clone.appspot.com",
+  messagingSenderId: "854325994917",
+  appId: "1:854325994917:web:cbf55e2cbba8b04e41fa1a"
 };
 
 // Initialize Firebase
