@@ -50,17 +50,17 @@ const Index = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#F8F9FA]">
+    <div className="flex h-screen bg-[#0A1929]">
       <Sidebar setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-b from-blue-900 to-blue-50">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gradient-to-b from-[#0A1929] to-[#1E3A8A]">
           <div className="container mx-auto px-6 py-8">
             <div className="relative mb-6">
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-blue-200 focus:outline-none focus:border-blue-500 bg-white/90"
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-blue-700 focus:outline-none focus:border-blue-500 bg-[#0A1929]/90 text-white"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

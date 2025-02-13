@@ -18,20 +18,20 @@ const Sidebar = ({ setActiveComponent, activeComponent }: SidebarProps) => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-blue-100">
+    <div className="w-64 bg-[#0A1929] border-r border-blue-900/30">
       <div className="h-full flex flex-col">
-        <div className="h-16 flex items-center justify-center">
-          <h1 className="text-2xl font-bold text-blue-900">BH Finance</h1>
+        <div className="h-16 flex items-center justify-center border-b border-blue-900/30">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">BH Finance</h1>
         </div>
         <nav className="flex-1 px-4 py-6">
           {menuItems.map((item) => (
             <button
               key={item.value}
               onClick={() => setActiveComponent(item.value)}
-              className={`w-full flex items-center px-4 py-3 mb-2 rounded-lg transition-colors ${
+              className={`w-full flex items-center px-4 py-3 mb-2 rounded-lg transition-all duration-200 ${
                 activeComponent === item.value
-                  ? 'bg-blue-500 text-white'
-                  : 'text-blue-600 hover:bg-blue-50'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                  : 'text-blue-300 hover:bg-blue-800/30'
               }`}
             >
               <item.icon className="h-5 w-5 mr-3" />
