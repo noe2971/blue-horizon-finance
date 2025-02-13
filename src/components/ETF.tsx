@@ -1,11 +1,9 @@
-import React from 'react';
+
+import Stocks from './Stocks';
 
 const ETF = () => {
-  return (
-    <div>
-      
-    </div>
-  );
+  // Since ETFs are now combined with Stocks
+  return <Stocks />;
 };
 
 export default ETF;
