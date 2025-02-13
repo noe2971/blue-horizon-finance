@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB00Ln4uv8ug9Gmp-K2nLHFIelRq9_0RK4",
+  apiKey: "AIzaSyD1uDnkZ72ufxPdEIfssD2zIzZvKrT1_-4",
   authDomain: "lovable-clone.firebaseapp.com",
   projectId: "lovable-clone",
   storageBucket: "lovable-clone.appspot.com",
