@@ -106,14 +106,19 @@ const Scan = () => {
       ? `I just found ${amount}/year in subscriptions I'm cancelling, using SubSlayer. It takes 30 seconds and never sees your bank login:`
       : `I'm paying ${amount}/year in subscriptions 😳. Found them all in 30 seconds with SubSlayer:`;
     const url = window.location.origin;
-    try {
-      if (navigator.share) await navigator.share({ text, url });
-      else {
-        await navigator.clipboard.writeText(`${text} ${url}`);
-        toast.success("Copied. Paste it anywhere.");
+    if (navigator.share) {
+      try {
+        await navigator.share({ text, url });
+        return;
+      } catch (e) {
+        if (e instanceof DOMException && e.name === "AbortError") return; // user dismissed the sheet
       }
+    }
+    try {
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      toast.success("Copied. Paste it anywhere.");
     } catch {
-      /* user dismissed the share sheet */
+      toast.error("Couldn't copy automatically. Your total is at the top of the page.");
     }
   };
 
